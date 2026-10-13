@@ -1,7 +1,9 @@
 package com.vanyookk.unipocket.data.local
 
 import android.content.Context
+import android.content.Intent
 import androidx.core.content.edit
+import com.vanyookk.unipocket.MainActivity
 
 object TokenManager {
     private const val PREFS_NAME = "student_portal_prefs"
@@ -29,5 +31,10 @@ object TokenManager {
     fun clear(context: Context) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit { clear() }
+
+         val intent = Intent(context, MainActivity::class.java).apply {
+             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+         }
+        context.startActivity(intent)
     }
 }
