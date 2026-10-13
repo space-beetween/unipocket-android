@@ -38,6 +38,6 @@ sealed class NavScreen(
     )
 
     companion object {
-        val bottomBarScreens = listOf(Schedule, Journal, Events)
+        val bottomBarScreens = listOf(Schedule, Journal)
     }
 }
