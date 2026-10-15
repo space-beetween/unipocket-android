@@ -21,8 +21,10 @@ interface AuthApi {
     @POST
     suspend fun submitLoginForm(
         @Url actionUrl: String,
+        @Header("Referer") referer: String,
         @Field("username") username: String,
-        @Field("password") password: String
+        @Field("password") password: String,
+        @Field("credentialId") credentialId: String = "",
     ): Response<Unit>
 
     @FormUrlEncoded

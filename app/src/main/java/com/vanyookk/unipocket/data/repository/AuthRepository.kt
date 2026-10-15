@@ -29,11 +29,12 @@ class AuthRepository (
                 codeChallenge = codeChallenge
             )
 
+            val authPageUrl = authResponse.raw().request.url.toString()
             val htmlBody =
                 authResponse.body()?.string() ?: return Result.failure(Exception("Empty"))
             val actionUrl =
                 parseFormActionUrl(htmlBody) ?: return Result.failure(Exception("Wrong Form"))
-            val loginResponse = authApi.submitLoginForm(actionUrl, username, password)
+            val loginResponse = authApi.submitLoginForm(actionUrl, authPageUrl, username, password, "")
 
             if (loginResponse.code() != 302){
                 return Result.failure(Exception("Wrong credentials"))

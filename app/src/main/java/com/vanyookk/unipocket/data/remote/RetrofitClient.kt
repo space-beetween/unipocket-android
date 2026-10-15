@@ -47,6 +47,19 @@ object RetrofitClient {
         OkHttpClient.Builder()
             .followRedirects(false)
             .cookieJar(JavaNetCookieJar(cookieManager))
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val request = original.newBuilder()
+                    .header("User-Agent", "Mozilla/5.0 (Linux; Android 14; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36")
+                    .header("Origin", "https://key.kbtu.kz")
+                    .apply {
+                        if (original.header("Referer") == null) {
+                            header("Referer", "https://key.kbtu.kz/")
+                        }
+                    }
+                    .build()
+                chain.proceed(request)
+            }
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
